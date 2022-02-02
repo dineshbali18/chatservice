@@ -18,15 +18,15 @@ io.on('connection',(socket)=>{
 
 console.log(socket.id);
 const users={};
-socket.on('username',(userName)=>{
- const user={
-  name:userName,
-  id:socket.id
- };
- users[socket.id]=user;
- io.emit('connected',user);
- io.emit("users", Object.values(users));
-})
+// socket.on('username',(userName)=>{
+//  const user={
+//   name:userName,
+//   id:socket.id
+//  };
+//  users[socket.id]=user;
+//  io.emit('connected',user);
+//  io.emit("users", Object.values(users));
+// })
 
 socket.on('join-room',(data)=>{
  socket.join(data);
