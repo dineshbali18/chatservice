@@ -46,8 +46,8 @@ socket.on('join-room',(data)=>{
 socket.on('send-message',(data)=>{
     console.log(data)
     let msg=new msgSchema({
-        msg:data.content,
-        user:data.user
+        msg:data.message,
+        user:data.author
     })
     msg.save((err,msg1)=>{
         if(err){
