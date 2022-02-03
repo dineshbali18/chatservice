@@ -34,7 +34,7 @@ socket.on('join-room',(data)=>{
 })
 
 socket.on('send-message',(data)=>{
- socket.to(data.room).emit('recieve-msg',data.content)
+ io.to(data.room).emit('recieve-msg',data.content)
 })
 
 socket.on('disconnect',(socket)=>{
