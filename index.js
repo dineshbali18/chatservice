@@ -1,5 +1,7 @@
 require('dotenv').config()
+const mongoose=require('mongoose')
 const express=require('express');
+const msgSchema=require('./models/message')
 const socket=require('socket.io');
 const app=express();
 const cors=require('cors')
@@ -12,6 +14,14 @@ const server=app.listen(process.env.PORT,()=>{
  console.log("server is up and running!")
 
 })
+mongoose.connect('mongodb+srv://Bali:DiNeSh5@cluster0.s2y0j.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // useCreateIndex: true
+  })
+  .then(() => {
+    console.log("DB CONNECTED");
+
 const io=socket(server);
 
 io.on('connection',(socket)=>{
@@ -34,6 +44,16 @@ socket.on('join-room',(data)=>{
 })
 
 socket.on('send-message',(data)=>{
+    console.log(data)
+    let msg=new msgSchema({
+        msg:data.content,
+        user:data.user
+    })
+    msg.save((err,msg1)=>{
+        if(err){
+            console.log({err})
+        }
+    })
  io.to(data.room).emit('recieve-msg',data.content)
 })
 
@@ -44,3 +64,7 @@ socket.on('disconnect',(socket)=>{
 })
 }
 )
+  }).catch((e)=>{
+    console.log(e);
+    console.log("DB NOT CONNECTED SUCCESFULLY");
+});
