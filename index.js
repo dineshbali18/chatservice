@@ -37,6 +37,17 @@ const users={};
 //  io.emit('connected',user);
 //  io.emit("users", Object.values(users));
 // })
+ 
+ /// cureently             testing....................
+ socket.on('get-datadb',(data)=>{
+ msgSchema.find({roomname:data}).exec((err,result)=>{
+  if(err){
+  console.log(err);
+  }
+ io.to(data).emit('recieve-datadb',result)
+ })
+ })
+ ///testing end..............................
 
 socket.on('join-room',(data)=>{
  socket.join(data);
