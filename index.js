@@ -45,16 +45,21 @@ socket.on('join-room',(data)=>{
 
 socket.on('send-message',(data)=>{
     console.log(data)
-    let msg=new msgSchema({
-        room:data.room,
-        msg:data.content.message,
-        user:data.content.author
-    })
-    msg.save((err,msg1)=>{
+ msgSchema.updateOne({roomname:data.room},{$push:{msgs:data.content}},function(err,success){
         if(err){
-            console.log({err})
+            console.log(err)
         }
     })
+//     let msg=new msgSchema({
+//         room:data.room,
+//         msg:data.content.message,
+//         user:data.content.author
+//     })
+//     msg.save((err,msg1)=>{
+//         if(err){
+//             console.log({err})
+//         }
+//     })
  io.to(data.room).emit('recieve-msg',data.content)
 })
 
