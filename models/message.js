@@ -1,16 +1,12 @@
 const mongoose=require('mongoose')
 const msgSchema=new mongoose.Schema({
-    msg:{
+    roomname:{
         type:String,
         required:true
     },
-    room:{
-        type:String,
-        required:true
-    },
-    user:{
-        type:String,
-        required:true
+    msgs:{
+        type:Array,
+        default:[]
     }
 })
 
